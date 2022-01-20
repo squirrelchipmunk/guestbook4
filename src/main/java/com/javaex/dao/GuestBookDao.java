@@ -1,13 +1,9 @@
 package com.javaex.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.GuestBookVo;
@@ -15,6 +11,25 @@ import com.javaex.vo.GuestBookVo;
 @Repository
 public class GuestBookDao {
 
+	@Autowired
+	private SqlSession sqlSession;
+	
+	public List<GuestBookVo> getGuestBookList() {
+		List<GuestBookVo> guestBookList = sqlSession.selectList("guestbook.selectList");
+		
+		return guestBookList;
+	}
+
+	public void addGuestBook(GuestBookVo vo) {
+		sqlSession.insert("guestbook.insert", vo);
+	}
+	
+	public void deleteGuestBook(GuestBookVo vo){
+		sqlSession.delete("guestbook.delete", vo);
+	}
+
+	
+	/*
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs= null;
@@ -160,5 +175,5 @@ public class GuestBookDao {
 			
 		return guestBook;
 	}
-	
+	*/
 }

@@ -22,6 +22,7 @@ public class GuestController {
 	
 	@RequestMapping(value="/addList", method= {RequestMethod.GET, RequestMethod.POST})
 	public String addList(Model model){
+		System.out.println("addList()");
 		List<GuestBookVo> guestBookList = guestBookDao.getGuestBookList();
 		model.addAttribute("gList",guestBookList);
 		
